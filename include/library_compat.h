@@ -4,6 +4,10 @@
 #ifdef _WIN32
     #include <conio.h>
     #include <windows.h>
+
+    #define kbhit_compat() _kbhit()
+    #define getch_compat() _getch()
+
 #else
     #include <termios.h>
     #include <unistd.h>
@@ -37,14 +41,18 @@ static int kbhit() {
 static int getch_compat() {
     struct termios oldt, newt;
     int ch;
+
     tcgetattr(STDIN_FILENO, &oldt);
     newt = oldt;
     newt.c_lflag &= ~(ICANON | ECHO);
     tcsetattr(STDIN_FILENO, TCSANOW, &newt);
+
     ch = getchar();
+
     tcsetattr(STDIN_FILENO, TCSANOW, &oldt);
     return ch;
 }
+
 #endif
 
 #endif // LIBRARY_COMPAT_H

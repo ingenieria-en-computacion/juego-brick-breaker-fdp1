@@ -1,14 +1,18 @@
-#include "score.h"
 #include <stdio.h>
+#include <stdlib.h>
+#include "score.h"
 
 static int score = 0;
 
 void score_init(const char *filename) {
-    // TODO: Crear archivo si no existe o cargar mejores puntajes
+    /* Creación/lectura básica: si archivo no existe, se crea vacío */
+    FILE *f = fopen(filename, "a");
+    if (f != NULL) fclose(f);
+    score = 0;
 }
 
 void score_add(int points) {
-    // TODO: sumar puntos al puntaje actual
+    score += points;
 }
 
 int score_get() {
@@ -16,5 +20,8 @@ int score_get() {
 }
 
 void score_save(const char *filename) {
-    // TODO: guardar puntaje final del jugador en el archivo
+    FILE *f = fopen(filename, "a");
+    if (f == NULL) return;
+    fprintf(f, "%d\n", score);
+    fclose(f);
 }

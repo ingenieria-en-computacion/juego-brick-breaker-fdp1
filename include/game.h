@@ -11,4 +11,9 @@ void game_loop_step();
 // Devuelve si el juego terminó
 int game_is_over();
 
+// --- FALTA ESTA FUNCIÓN ---
+// Devuelve 1 si el jugador ganó, 0 si no
+int game_player_won();
+
 #endif
+
